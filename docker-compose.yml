@@ -19,7 +19,7 @@ services:
       - rabbitmq
     environment:
       - MONIKER=
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-pre-v0.2.8hardfork2022-03-17.tar.gz
+      - SNAPSHOT_URL=	https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/heimdall-snapshot-2022-06-10.tar.gz
       - GENESIS_URL=https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/without-sentry/heimdall/config/genesis.json
       - BOOTSTRAP=1
       - ETH1_RPC_URL=https://mainnet.infura.io/v3/bc2e391ef1b041a8b8f2aeb127bf9558
@@ -46,7 +46,7 @@ services:
       context: ./build/bor
       dockerfile: Dockerfile
     environment:
-      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-pruned-snapshot-2022-03-13.tar.gz
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mainnet/bor-fullnode-snapshot-2022-06-09.tar.gz
       - GENESIS_URL=https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
       - BOOTSTRAP=1
       - NETWORK_ID=137
