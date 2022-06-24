@@ -1,10 +1,11 @@
-version: "3.4"
+version: "3.8"
 services:
   rabbitmq:
     container_name: rabbitmq
     image: "rabbitmq:3-alpine"
     restart: unless-stopped
   heimdalld:
+    container_name: heimdalld
     build: &ref_0
       args:
         UPSTREAM_VERSION:  v0.2.10
@@ -27,6 +28,7 @@ services:
       - BOOTNODES=
     restart: unless-stopped
   heimdallr:
+    container_name: heimdallr
     environment:
       - REST_SERVER=1
       - ETH1_RPC_URL=https://goerli.infura.io/v3/bc2e391ef1b041a8b8f2aeb127bf9558
@@ -37,6 +39,7 @@ services:
       - heimdalld
     restart: unless-stopped
   bor:
+    container_name: bor
     build:
       args:
         UPSTREAM_VERSION: v0.2.16
