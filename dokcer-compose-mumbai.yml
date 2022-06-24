@@ -1,0 +1,58 @@
+version: "3.4"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: "rabbitmq:3-alpine"
+    restart: unless-stopped
+  heimdalld:
+    build: &ref_0
+      args:
+        UPSTREAM_VERSION:  v0.2.10
+      context: ./build/heimdall
+      dockerfile: Dockerfile
+    volumes:
+      - "/data/matic/heimdall:/root/.heimdalld"
+    ports:
+      - "26656:26656"
+    depends_on:
+      - rabbitmq
+    environment:
+      - MONIKER=
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mumbai/heimdall-snapshot-2022-03-22.tar.gz
+      - GENESIS_URL=https://raw.githubusercontent.com/maticnetwork/launch/master/testnet-v4/without-sentry/heimdall/config/genesis.json
+      - BOOTSTRAP=1
+      - ETH1_RPC_URL=https://goerli.infura.io/v3/bc2e391ef1b041a8b8f2aeb127bf9558
+      - SEEDS=4cd60c1d76e44b05f7dfd8bab3f447b119e87042@54.147.31.250:26656
+      - NETWORK_ID=80001
+      - BOOTNODES=
+    restart: unless-stopped
+  heimdallr:
+    environment:
+      - REST_SERVER=1
+      - ETH1_RPC_URL=https://goerli.infura.io/v3/bc2e391ef1b041a8b8f2aeb127bf9558
+    build: *ref_0
+    volumes:
+      - "/data/matic/heimdall:/root/.heimdalld"
+    depends_on:
+      - heimdalld
+    restart: unless-stopped
+  bor:
+    build:
+      args:
+        UPSTREAM_VERSION: v0.2.16
+      context: ./build/bor
+      dockerfile: Dockerfile
+    environment:
+      - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mumbai/bor-fullnode-snapshot-2022-06-01.tar.gz
+      - GENESIS_URL=https://raw.githubusercontent.com/maticnetwork/launch/master/testnet-v4/sentry/sentry/bor/genesis.json
+      - BOOTSTRAP=1
+      - NETWORK_ID=80001
+      - MAXPEERS=
+    volumes:
+      - "/data/matic/bor:/datadir"
+    ports:
+      - "40303:40303"
+      - "40303:40303/udp"
+    depends_on:
+      - heimdallr
+    restart: unless-stopped

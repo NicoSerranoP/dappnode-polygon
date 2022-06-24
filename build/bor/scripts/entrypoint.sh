@@ -12,7 +12,7 @@ then
     echo "setting up initial configurations"
     cd ${BOR_HOME}
     echo "downloading launch genesis file"
-    wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
+    wget ${GENESIS_URL}
     echo "initializing bor with genesis file"
     bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
 else
@@ -22,7 +22,7 @@ else
     if [ ${GREPSTRING} == 0 ];
     then
         echo "Updating Genesis File"
-        wget https://raw.githubusercontent.com/maticnetwork/launch/master/mainnet-v1/sentry/sentry/bor/genesis.json
+        wget ${GENESIS_URL}
         bor --datadir ${BOR_HOME} init ${BOR_HOME}/genesis.json
     fi
 fi
@@ -43,7 +43,7 @@ do
     READY=$(curl -s heimdalld:26657/status | jq '.result.sync_info.catching_up')
 done
 
-exec bor --port=40303 --maxpeers=${MAXPEERS:-200} --datadir=/datadir  --networkid=137 --syncmode=full \
+exec bor --port=40303 --maxpeers=${MAXPEERS:-200} --datadir=/datadir  --networkid=${NETWORK_ID} --syncmode=full \
     --ipcpath ${BOR_HOME}/bor.ipc --bor.heimdall=http://heimdallr:1317 \
     --txpool.accountslots=16 --txpool.globalslots=131072 --txpool.accountqueue=64 --txpool.globalqueue=131072 \
     --txpool.lifetime='1h30m0s' --miner.gaslimit=200000000  --miner.gastarget=20000000 --miner.gasprice '30000000000' \
