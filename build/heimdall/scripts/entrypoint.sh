@@ -24,7 +24,7 @@ then
     # CORS
     sed -i "s#^cors_allowed_origins.*#cors_allowed_origins = [\"*\"]#" config.toml
     # SEEDS
-    sed -i "s#^seeds.*#seeds = \"${BOOTNODES:-${SEEDS}}\"#" config.toml
+    sed -i "s#^seeds.*#seeds = \"${BOOTNODES:-SEEDS}\"#" config.toml
     # heimdall-config.toml
     # BOR
     sed -i "s#^bor_rpc_url.*#bor_rpc_url = \"http://bor:8545\"#" heimdall-config.toml
