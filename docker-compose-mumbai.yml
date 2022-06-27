@@ -25,7 +25,7 @@ services:
       - SNAPSHOT_URL=https://matic-blockchain-snapshots.s3-accelerate.amazonaws.com/matic-mumbai/heimdall-snapshot-2022-03-22.tar.gz
       - GENESIS_URL=https://raw.githubusercontent.com/maticnetwork/launch/master/testnet-v4/without-sentry/heimdall/config/genesis.json
       - BOOTSTRAP=1
-      - ETH1_RPC_URL=https://goerli.infura.io/v3/bc2e391ef1b041a8b8f2aeb127bf9558
+      - ETH1_RPC_URL=https://goerli.infura.io/v3/[PROJECT_ID_GOES_HERE]
       - SEEDS=4cd60c1d76e44b05f7dfd8bab3f447b119e87042@54.147.31.250:26656
       - NETWORK_ID=80001
       - BOOTNODES=
@@ -37,7 +37,7 @@ services:
     container_name: heimdallr
     environment:
       - REST_SERVER=1
-      - ETH1_RPC_URL=https://goerli.infura.io/v3/bc2e391ef1b041a8b8f2aeb127bf9558
+      - ETH1_RPC_URL=https://goerli.infura.io/v3/[PROJECT_ID_GOES_HERE]
     build: *ref_0
     volumes:
       - "/data/matic/heimdall:/root/.heimdalld"
